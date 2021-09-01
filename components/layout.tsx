@@ -1,15 +1,12 @@
 import { ReactNode } from 'react'
-import {CatHombre, CatMujer, CatInfantil} from '../components/categories/category'
-
-const catHombre = Object.values(CatHombre).map( (c,i) => <li key={c}><a>{c}</a></li>)
-const catMujer = Object.values(CatMujer).map( (c,i) => <li key={c}><a>{c}</a></li>)
-const catInfantil = Object.values(CatInfantil).map( (c,i) => <li key={c}><a>{c}</a></li>)
-
+import { Categorias } from './categories/category'
+import Link from 'next/link'
 type Props = {
-  page: ReactNode
+  page: ReactNode,
+  categorias:Categorias
 }
 
-const Layout = ({page}:Props) => {
+const Layout = ({page, categorias}:Props) => {
   return(
     <>
       <div className="drawer drawer-mobile min-h-screen">
@@ -20,7 +17,7 @@ const Layout = ({page}:Props) => {
             <div className="navbar max-w-none">
               
               {/* mobile menu icon */}
-              <div className="navbar-start">
+              <div className="navbar-start md:hidden">
                 <label htmlFor="nav-menu" className="btn btn-square btn-ghost drawer-button lg:hidden">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -42,13 +39,13 @@ const Layout = ({page}:Props) => {
             </div>
           </nav>
           {/* content goes here */}
-          <div>
+          <div className="m-4">
             {page}
           </div>
         </main>
 
         {/* mobile side menu */}
-        <div className="drawer-side">
+        <div className="drawer-side md:hidden">
           <label htmlFor="nav-menu" className="drawer-overlay"></label>
           <aside className="flex flex-col justify-center w-80 bg-base-100">
             {/* categories */}
@@ -57,25 +54,27 @@ const Layout = ({page}:Props) => {
                 <li>
                   <a className="bg-gray-100">Mujer</a> 
                   <ul className="menu">
-                    {catMujer}
+                    {Object.entries(categorias.catMujer).map(([k,v]) => {
+                      return <li key={v}><Link href={"/mujer/" + k}><a>{v}</a></Link></li>
+                    })}
                   </ul>
                 </li>
                 <div className="divider"></div>
                 <li>
                   <a className="bg-gray-100">Hombre</a> 
                   <ul className="menu">
-                    <li>
-                      {catHombre}
-                    </li>
+                    {Object.entries(categorias.catHombre).map(([k,v]) => {
+                      return <li key={v}><Link href={"/hombre/" + k}><a>{v}</a></Link></li>
+                    })}
                   </ul>
                 </li>
                 <div className="divider"></div>
                 <li>
                   <a className="bg-gray-100">Infantil</a> 
                   <ul className="menu">
-                    <li>
-                      {catInfantil}
-                    </li>
+                    {Object.entries(categorias.catInfantil).map(([k,v]) => {
+                      return <li key={v}><Link href={"/infantil/" + k}><a>{v}</a></Link></li>
+                    })}
                   </ul>
                 </li>
               </ul>
@@ -90,5 +89,7 @@ const Layout = ({page}:Props) => {
   )
 
 }
+
+
 
 export default Layout

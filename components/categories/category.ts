@@ -43,3 +43,19 @@ export class Mujer implements Categoria{
 export class Infantil implements Categoria{
   public categoria?: CatInfantil;
 }
+
+export const catHombre = Object(CatHombre)
+export const catMujer = Object(CatMujer)
+export const catInfantil = Object(CatInfantil)
+
+export class Categorias {
+  public catHombre:Object
+  public catMujer:Object
+  public catInfantil:object
+  
+  constructor(){
+    this.catHombre = catHombre
+    this.catMujer = catMujer
+    this.catInfantil = catInfantil
+  }
+}
